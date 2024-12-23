@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 
 class SalesController extends Controller
 {
-    public function index () {
-        $users = User::all();
-        $sales = Sales::with('users')->get();
+    public function index()
+{
+    $users = User::all();
+    $sales = Sales::with('users')->get();
 
-        return view('penjualan.sales', compact('sales', 'users'));
-    }
+    // Debug data
+    //dd($sales->toArray(), $users->toArray());
+
+    return view('penjualan.sales', compact('sales', 'users'));
+}
+
 }

@@ -125,8 +125,19 @@
                 </div>
                 <div class="form-group">
                     <label for="total">Total</label>
-                    <input type="number" name="total" class="form-control">
+                    <input type="number" name="total" class="form-control" id="total" readonly>
                 </div>                                                 
+                <div class="form-group">
+                  <label for="kasir">Kasir</label>
+                  <select name="kasir" class="form-control" id="">
+                      <option value="" hidden selected disabled>Pilih Kasir</option>
+                      @foreach ($users as $row)
+                          @if ($row->role == 3)
+                              <option value="{{ $row->id }}">{{ $row->name }}</option>
+                          @endif
+                      @endforeach
+                  </select>
+                </div>                                                                   
                 <button type="submit" class="btn btn-secondary mt-3">Simpan</button>
               </form>
           </div>

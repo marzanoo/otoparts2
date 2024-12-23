@@ -10,7 +10,7 @@ class Sales extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $primary_key = 'id_penjualan';
+    protected $primaryKey = 'id_penjualan';
 
     public function users () {
 
