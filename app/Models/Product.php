@@ -16,4 +16,12 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class, 'id_merek', 'id_merek');
     }
+
+    public function details() {
+        return $this->hasMany(Details::class, 'id_barang', 'id_barang');
+    }
+
+    public function purchasedetails() {
+        return $this->hasMany(PurchaseDetail::class, 'id_barang', 'id_barang');
+    }
 }

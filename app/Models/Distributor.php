@@ -11,4 +11,8 @@ class Distributor extends Model
 
     protected $guarded = [];
     protected $primaryKey = 'id_distributor';
+
+    public function purchases() {
+        return $this->hasMany(Purchase::class, 'id_distributor', 'id_distributor');
+    }
 }

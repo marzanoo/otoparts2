@@ -9,14 +9,19 @@ use Illuminate\Http\Request;
 class SalesController extends Controller
 {
     public function index()
-{
-    $users = User::all();
-    $sales = Sales::with('users')->get();
+    {
+        $users = User::all();
+        $sales = Sales::with('users')->get();        
 
-    // Debug data
-    //dd($sales->toArray(), $users->toArray());
+        return view('penjualan.sales', compact('sales', 'users'));
+    }
 
-    return view('penjualan.sales', compact('sales', 'users'));
-}
+    public function add(Request $request) {
+        $sales = Sales::create([
+            'tanggal' => $request->tanggal,
+            'id_user' => $request->kasir
+        ]);
 
+        return redirect()->route('details', ['id' => $sales->id_penjualan]);
+    }
 }

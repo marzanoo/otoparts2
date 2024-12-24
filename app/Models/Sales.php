@@ -12,8 +12,12 @@ class Sales extends Model
     protected $guarded = [];
     protected $primaryKey = 'id_penjualan';
 
-    public function users () {
+    public function users() {
 
         return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    public function details() {
+        return $this->hasMany(Details::class, 'id_penjualan', 'id_penjualan');
     }
 }

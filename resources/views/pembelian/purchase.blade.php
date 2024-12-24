@@ -79,7 +79,7 @@
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-3">No</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Tanggal</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Total</th>                      
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Kasir</th>                      
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Distributor</th>                      
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Detail</th>
                       <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Aksi</th>
                     </tr>
@@ -87,17 +87,17 @@
                   <tbody>
                     <tr>                      
                       @php $index = 1; @endphp
-                      @foreach($sales as $row)
+                      @foreach($purchases as $row)
                       <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-3">{{ $index++}}</td>
                       <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">{{ $row->tanggal}}</td>
                       <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">{{ $row->total}}</td>                                            
-                      <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">{{ $row->users->name}}</td>                                            
+                      <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">{{ $row->distributors->nama_distributor}}</td>                                            
                       <td class="text-center">
-                        <button class="btn btn-secondary" onclick="window.location.href='{{ url('/details') . '/' . $row->id_penjualan }}'">Detail</button>
+                        <button class="btn btn-secondary" onclick="window.location.href='{{ url('/purchase-details') . '/' . $row->id_pembelian }}'">Detail</button>
                       </td>
                       <td class="text-center">
-                        <button class="btn btn-primary" onclick="openModalEdit({{ $row->id_penjualan}}, '{{ $row->tanggal}}', '{{ $row->total}}', '{{ $row->id_user}}')">Ubah</button>
-                        <form action="{{ url('/delete-merek') . '/' . $row->id_merek }}" method="POST" style="display:inline;">
+                        <button class="btn btn-primary" onclick="openModalEdit({{ $row->id_pembelian}}, '{{ $row->tanggal}}', '{{ $row->total}}', '{{ $row->id_distributor}}')">Ubah</button>
+                        <form action="{{ url('/delete-purchase-details') . '/' . $row->id_pembelian }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin menghapus?')">Hapus</button>
@@ -121,7 +121,7 @@
               <button onclick="closeModalTambah()">×</button>
           </div>
           <div class="modal-body">
-              <form method="post" action="/add-penjualan">
+              <form method="post" action="/add-pembelian">
                 @csrf
                 <div class="form-group">
                     <label for="tanggal">Tanggal</label>
@@ -132,13 +132,11 @@
                     <input type="number" name="total" class="form-control" id="total" readonly>
                 </div>                                                 
                 <div class="form-group">
-                  <label for="kasir">Kasir</label>
-                  <select name="kasir" class="form-control" id="">
-                      <option value="" hidden selected disabled>Pilih Kasir</option>
-                      @foreach ($users as $row)
-                          @if ($row->role == 3)
-                              <option value="{{ $row->id }}">{{ $row->name }}</option>
-                          @endif
+                  <label for="distributor">Distributor</label>
+                  <select name="distributor" class="form-control" id="">
+                      <option value="" hidden selected disabled>Pilih Distributor</option>
+                      @foreach ($distributors as $row)            
+                        <option value="{{ $row->id_distributor }}">{{ $row->nama_distributor }}</option>                          
                       @endforeach
                   </select>
                 </div>                                                                   

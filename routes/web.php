@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\DetailsController;
 use App\Http\Controllers\DistributorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseDetailController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SalesController;
@@ -46,12 +49,22 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('rtl');
 	})->name('rtl');
 
-	Route::get('pembelian', function () {
-		return view('pembelian');
-	})->name('pembelian');
+	//pembelian
+	Route::get('/pembelian', [PurchaseController::class, 'index']);
+	Route::post('/add-pembelian', [PurchaseController::class, 'add']);
+
+	//detail pembelian
+	Route::get('/purchase-details/{id}', [PurchaseDetailController::class, 'index'])->name('purchase-details');
+	Route::post('/add-purchase-details', [PurchaseDetailController::class, 'add']);
+
+	//detail penjualan
+	Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details');
+	Route::post('/add-details', [DetailsController::class, 'add']);
+	Route::put('/edit-details/{id_penjualan}/{id_barang}', [DetailsController::class, 'edit']);
 
 	//penjualan
 	Route::get('/penjualan', [SalesController::class, 'index']);
+	Route::post('/add-penjualan', [SalesController::class, 'add']);
 
 	//distributor
 	Route::get('/distributor', [DistributorController::class, 'index']);
