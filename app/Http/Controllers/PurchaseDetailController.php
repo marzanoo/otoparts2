@@ -6,12 +6,15 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PurchaseDetailController extends Controller
 {
     public function index($id){
-
+        if (Auth::user()->role != 1){
+            return redirect('dashboard');
+        }
         $purchases = Purchase::findOrFail($id);
         $products = Product::all();
         $purchasedetails = PurchaseDetail::with('purchases', 'products')->where('id_pembelian', $id)->get();

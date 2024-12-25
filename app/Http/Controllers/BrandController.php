@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
     public function index() {
-
+        if (Auth::user()->role != 1 && Auth::user()->role != 2){
+            return redirect('dashboard');
+        }
         $brands = Brand::all();
         return view('merek.brand', compact('brands'));
     }

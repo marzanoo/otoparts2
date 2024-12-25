@@ -7,11 +7,16 @@ use App\Models\Product;
 use App\Models\Sales;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalesController extends Controller
 {
     public function index()
     {
+        if (Auth::user()->role != 1 && Auth::user()->role != 3){
+            return redirect('dashboard');
+        }
+        
         $users = User::all();
         $sales = Sales::with('users')->get();        
 

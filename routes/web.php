@@ -33,9 +33,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', function () {
-		return view('dashboard');
-	})->name('dashboard');
+	Route::get('dashboard', [HomeController::class, 'home'])->name('dashboard');
 
 	Route::get('billing', function () {
 		return view('billing');
@@ -91,10 +89,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::delete('/delete-barang/{id}', [ProductController::class, 'delete']);
 	Route::put('/edit-barang/{id}', [ProductController::class, 'edit']);
 
-
-	Route::get('user-management', function () {
-		return view('laravel-examples/user-management');
-	})->name('user-management');
+	//user management
+	Route::get('user-management', [InfoUserController::class, 'index']);
+	Route::post('/add-user', [InfoUserController::class, 'addUser']);
+	Route::delete('/delete-user/{id}', [InfoUserController::class, 'deleteUser']);
+	Route::put('/edit-user/{id}', [InfoUserController::class, 'editUser']);
 
 	Route::get('tables', function () {
 		return view('tables');

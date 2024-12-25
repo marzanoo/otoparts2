@@ -7,11 +7,14 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PurchaseController extends Controller
 {
     public function index() {
-        
+        if (Auth::user()->role != 1){
+            return redirect('dashboard');
+        }
         $distributors = Distributor::all();
         $purchases = Purchase::with('distributors')->get();        
 

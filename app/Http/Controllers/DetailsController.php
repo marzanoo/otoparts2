@@ -6,12 +6,15 @@ use App\Models\Details;
 use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DetailsController extends Controller
 {
     public function index($id){
-
+        if (Auth::user()->role != 1 && Auth::user()->role != 3){
+            return redirect('dashboard');
+        }
         $sales = Sales::findOrFail($id);
         $products = Product::all();
         $details = Details::with('sales', 'products')->where('id_penjualan', $id)->get();

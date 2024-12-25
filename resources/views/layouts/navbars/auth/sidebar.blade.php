@@ -30,9 +30,12 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
+      @if(auth()->user()->hasRole(3) || auth()->user()->hasRole(1))
       <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Transaksi</h6>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(3) || auth()->user()->hasRole(1))
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('penjualan') ? 'active' : '') }} " href="{{ url('penjualan') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -54,6 +57,8 @@
             <span class="nav-link-text ms-1">Penjualan</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(1))
       <li class="nav-item pb-2">
         <a class="nav-link {{ (Request::is('pembelian') ? 'active' : '') }}" href="{{ url('pembelian') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -62,6 +67,8 @@
             <span class="nav-link-text ms-1">Pembelian</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(1) || auth()->user()->hasRole(2))
       <li class="nav-item mt-2">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Master</h6>
       </li>
@@ -85,6 +92,8 @@
           <span class="nav-link-text ms-1">Barang</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(1) || auth()->user()->hasRole(2))
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('merek') ? 'active' : '') }}" href="{{ url('merek') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -105,6 +114,8 @@
           <span class="nav-link-text ms-1">Merek</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(1) || auth()->user()->hasRole(2))
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('distributor') ? 'active' : '') }}" href="{{ url('distributor') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -126,11 +137,13 @@
           <span class="nav-link-text ms-1">Distributor</span>
         </a>
       </li>      
+      @endif
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">User Management</h6>
       </li>
+      @if(auth()->user()->hasRole(3) || auth()->user()->hasRole(1) || auth()->user()->hasRole(2))
       <li class="nav-item">
-        <a class="nav-link {{ (Request::is('profile') ? 'active' : '') }}" href="{{ url('profile') }}">
+        <a class="nav-link {{ (Request::is('user-profile') ? 'active' : '') }}" href="{{ url('user-profile') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 46 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>customer-support</title>
@@ -150,6 +163,8 @@
           <span class="nav-link-text ms-1">Profile</span>
         </a>
       </li>
+      @endif
+      @if(auth()->user()->hasRole(1))
       <li class="nav-item">
         <a class="nav-link  {{ (Request::is('user-management') ? 'active' : '') }}" href="{{ url('user-management') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -169,6 +184,8 @@
           </div>
           <span class="nav-link-text ms-1">User</span>
         </a>
+      </li>
+      @endif
     </ul>
   </div>
 </aside>

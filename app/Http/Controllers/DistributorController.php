@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Distributor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DistributorController extends Controller
 {
     public function index() {
+        if (Auth::user()->role != 1 && Auth::user()->role != 2){
+            return redirect('dashboard');
+        }
         $distributors = Distributor::all();
 
         return view('distributor.distributor', compact('distributors'));

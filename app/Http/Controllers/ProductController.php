@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index() {
-
+        if (Auth::user()->role != 1 && Auth::user()->role != 2){
+            return redirect('dashboard');
+        }
         $brands = Brand::all();
         $products = Product::with('brands')->get();
         return view('barang.product', compact('products', 'brands'));
