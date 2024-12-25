@@ -97,7 +97,7 @@
                       </td>
                       <td class="text-center">
                         <button class="btn btn-primary" onclick="openModalEdit({{ $row->id_penjualan}}, '{{ $row->tanggal}}', '{{ $row->total}}', '{{ $row->id_user}}')">Ubah</button>
-                        <form action="{{ url('/delete-merek') . '/' . $row->id_merek }}" method="POST" style="display:inline;">
+                        <form action="{{ url('/delete-penjualan') . '/' . $row->id_penjualan }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin menghapus?')">Hapus</button>
@@ -133,7 +133,7 @@
                 </div>                                                 
                 <div class="form-group">
                   <label for="kasir">Kasir</label>
-                  <select name="kasir" class="form-control" id="">
+                  <select name="kasir" class="form-control" id="" required>
                       <option value="" hidden selected disabled>Pilih Kasir</option>
                       @foreach ($users as $row)
                           @if ($row->role == 3)
@@ -151,7 +151,7 @@
     <div class="modal-background" id="editModal">
       <div class="modal-content">
           <div class="modal-header">
-              <h3>Ubah Data Merek</h3>
+              <h3>Ubah Data Penjualan</h3>
               <button onclick="closeModalEdit()">×</button>
           </div>
           <div class="modal-body">
@@ -159,12 +159,22 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="nama_merek">Nama Merek</label>
-                    <input type="text" name="nama_merek" class="form-control" required>
+                  <label for="tanggal">Tanggal</label>
+                  <input type="date" name="tanggal" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <input type="text" name="deskripsi" class="form-control" required>
+                  <label for="total">Total</label>
+                  <input type="number" name="total" class="form-control" id="total" readonly>
+                </div>   
+                <div class="form-group">
+                  <label for="kasir">Kasir</label>
+                  <select name="kasir" class="form-control" id="" required>
+                    @foreach ($users as $row)
+                        @if ($row->role == 3)
+                            <option value="{{ $row->id }}">{{ $row->name }}</option>
+                        @endif
+                    @endforeach
+                  </select>
                 </div>                                                 
                 <button type="submit" class="btn btn-secondary mt-3">Simpan</button>
               </form>
@@ -173,11 +183,12 @@
     </div>
   </main>
   <script>
-    function openModalEdit(id_merek, nama_merek, deskripsi) {
+    function openModalEdit(id_penjualan, tanggal, total, id_user) {
         document.getElementById("editModal").style.display = "flex";
-        document.querySelector("#editModal [name=nama_merek]").value = nama_merek;
-        document.querySelector("#editModal [name=deskripsi]").value = deskripsi;
-        document.querySelector("#editModal form").action = '/edit-merek/' + id_merek ;
+        document.querySelector("#editModal [name=tanggal]").value = tanggal;
+        document.querySelector("#editModal [name=total]").value = total;
+        document.querySelector("#editModal [name=kasir]").value = id_user;
+        document.querySelector("#editModal form").action = '/edit-penjualan/' + id_penjualan ;
     }
 
     function closeModalEdit() {

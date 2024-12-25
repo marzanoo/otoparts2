@@ -67,6 +67,7 @@
           <div class="card mb-2">
             <div class="card-header pb-0">
                 <h6>Detail Penjualan</h6>
+                <button class="btn btn-secondary" onclick="window.location.href='{{ url('/penjualan') }}'">Kembali</button>
             </div>
             <div class="table-responsive pb-0">
                 <table class="table align-items-center mb-0">
@@ -89,12 +90,10 @@
                 </table>
             </div>
           </div>  
-          <div class="button-add">
-            <button class="btn btn-primary" onclick="openModalTambah()"><i class="fa-solid fa-plus" style="margin-right: 10px"></i>Tambah</button>
-          </div>
           <div class="card mb-4">
             <div class="card-header pb-0">
               <h6>Tabel Detail Penjualan</h6>
+              <button class="btn btn-primary" onclick="openModalTambah()"><i class="fa-solid fa-plus" style="margin-right: 10px"></i>Tambah</button>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
@@ -118,7 +117,7 @@
                       <td class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">{{ $row->subtotal}}</td>                                            
                       <td class="text-center">
                         <button class="btn btn-primary" onclick="openModalEdit({{ $sales->id_penjualan }}, {{ $row->id_barang }}, {{ $row->jumlah }}, {{ $row->subtotal}})">Ubah</button>
-                        <form action="{{ url('/delete-merek') . '/' . $row->id_merek }}" method="POST" style="display:inline;">
+                        <form action="{{ url('/delete-details') . '/' . $row->id_penjualan . '/' . $row->id_barang }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin menghapus?')">Hapus</button>

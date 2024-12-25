@@ -97,7 +97,7 @@
                       </td>
                       <td class="text-center">
                         <button class="btn btn-primary" onclick="openModalEdit({{ $row->id_pembelian}}, '{{ $row->tanggal}}', '{{ $row->total}}', '{{ $row->id_distributor}}')">Ubah</button>
-                        <form action="{{ url('/delete-purchase-details') . '/' . $row->id_pembelian }}" method="POST" style="display:inline;">
+                        <form action="{{ url('/delete-pembelian') . '/' . $row->id_pembelian }}" method="POST" style="display:inline;">
                           @csrf
                           @method('DELETE')
                           <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin menghapus?')">Hapus</button>
@@ -149,7 +149,7 @@
     <div class="modal-background" id="editModal">
       <div class="modal-content">
           <div class="modal-header">
-              <h3>Ubah Data Merek</h3>
+              <h3>Ubah Data Pembelian</h3>
               <button onclick="closeModalEdit()">×</button>
           </div>
           <div class="modal-body">
@@ -157,12 +157,20 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="nama_merek">Nama Merek</label>
-                    <input type="text" name="nama_merek" class="form-control" required>
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" name="tanggal" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="deskripsi">Deskripsi</label>
-                    <input type="text" name="deskripsi" class="form-control" required>
+                  <label for="total">Total</label>
+                  <input type="number" name="total" class="form-control" id="total" readonly>
+                </div>         
+                <div class="form-group">
+                  <label for="distributor">Distributor</label>
+                  <select name="distributor" class="form-control" id="">
+                    @foreach ($distributors as $row)            
+                      <option value="{{ $row->id_distributor }}">{{ $row->nama_distributor }}</option>                          
+                    @endforeach
+                  </select>
                 </div>                                                 
                 <button type="submit" class="btn btn-secondary mt-3">Simpan</button>
               </form>
@@ -171,11 +179,12 @@
     </div>
   </main>
   <script>
-    function openModalEdit(id_merek, nama_merek, deskripsi) {
+    function openModalEdit(id_pembelian, tanggal, total, id_distributor) {
         document.getElementById("editModal").style.display = "flex";
-        document.querySelector("#editModal [name=nama_merek]").value = nama_merek;
-        document.querySelector("#editModal [name=deskripsi]").value = deskripsi;
-        document.querySelector("#editModal form").action = '/edit-merek/' + id_merek ;
+        document.querySelector("#editModal [name=tanggal]").value = tanggal;
+        document.querySelector("#editModal [name=total]").value = total;
+        document.querySelector("#editModal [name=distributor]").value = id_distributor;
+        document.querySelector("#editModal form").action = '/edit-pembelian/' + id_pembelian ;
     }
 
     function closeModalEdit() {

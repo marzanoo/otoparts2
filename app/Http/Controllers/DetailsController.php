@@ -6,6 +6,7 @@ use App\Models\Details;
 use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DetailsController extends Controller
 {
@@ -55,6 +56,30 @@ class DetailsController extends Controller
         }
 
         return redirect()->back()->with('error', 'Detail penjualan tidak ditemukan');
+    }
+
+    public function delete(Request $request, $id_penjualan, $id_barang) {
+        $subtotal = Details::where('id_penjualan', $id_penjualan)
+                                  ->where('id_barang', $id_barang)
+                                  ->value('subtotal');
+        $jumlah = Details::where('id_penjualan', $id_penjualan)
+                                  ->where('id_barang', $id_barang)
+                                  ->value('jumlah');
+        DB::table('details')
+            ->where('id_penjualan', $id_penjualan)
+            ->where('id_barang', $id_barang)
+            ->delete();
+        $sales = Sales::find($id_penjualan);
+        if ($sales) {
+            $sales->total -= $subtotal;
+            $sales->save();
+        }
+        $product = Product::find($id_barang);
+        if ($product) {
+            $product->stok += $jumlah;
+            $product->save();
+        }
+        return redirect()->back();
     }
 
 

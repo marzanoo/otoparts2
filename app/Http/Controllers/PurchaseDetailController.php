@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseDetailController extends Controller
 {
@@ -41,4 +42,28 @@ class PurchaseDetailController extends Controller
 
         return redirect()->back();
     }
+    public function delete(Request $request, $id_pembelian, $id_barang) {
+        $subtotal = PurchaseDetail::where('id_pembelian', $id_pembelian)
+                                  ->where('id_barang', $id_barang)
+                                  ->value('subtotal');
+        $jumlah = PurchaseDetail::where('id_pembelian', $id_pembelian)
+                                  ->where('id_barang', $id_barang)
+                                  ->value('jumlah');
+        DB::table('purchase_details')
+            ->where('id_pembelian', $id_pembelian)
+            ->where('id_barang', $id_barang)
+            ->delete();
+        $purchase = Purchase::find($id_pembelian);
+        if ($purchase) {
+            $purchase->total -= $subtotal;
+            $purchase->save();
+        }
+        $product = Product::find($id_barang);
+        if ($product) {
+            $product->stok -= $jumlah;
+            $product->save();
+        }
+        return redirect()->back();
+    }
+    
 }

@@ -52,19 +52,26 @@ Route::group(['middleware' => 'auth'], function () {
 	//pembelian
 	Route::get('/pembelian', [PurchaseController::class, 'index']);
 	Route::post('/add-pembelian', [PurchaseController::class, 'add']);
+	Route::delete('/delete-pembelian/{id}', [PurchaseController::class, 'delete']);
+	Route::put('/edit-pembelian/{id}', [PurchaseController::class, 'edit']);
+
 
 	//detail pembelian
 	Route::get('/purchase-details/{id}', [PurchaseDetailController::class, 'index'])->name('purchase-details');
 	Route::post('/add-purchase-details', [PurchaseDetailController::class, 'add']);
+	Route::delete('/delete-purchase-details/{id_pembelian}/{id_barang}', [PurchaseDetailController::class, 'delete']);
 
 	//detail penjualan
 	Route::get('/details/{id}', [DetailsController::class, 'index'])->name('details');
 	Route::post('/add-details', [DetailsController::class, 'add']);
-	Route::put('/edit-details/{id_penjualan}/{id_barang}', [DetailsController::class, 'edit']);
+	//Route::put('/edit-details/{id_penjualan}/{id_barang}', [DetailsController::class, 'edit']);
+	Route::delete('/delete-details/{id_penjualan}/{id_barang}', [DetailsController::class, 'delete']);
 
 	//penjualan
 	Route::get('/penjualan', [SalesController::class, 'index']);
 	Route::post('/add-penjualan', [SalesController::class, 'add']);
+	Route::delete('/delete-penjualan/{id}', [SalesController::class, 'delete']);
+	Route::put('/edit-penjualan/{id}', [SalesController::class, 'edit']);
 
 	//distributor
 	Route::get('/distributor', [DistributorController::class, 'index']);
