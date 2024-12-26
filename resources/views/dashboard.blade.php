@@ -1,5 +1,7 @@
 @extends('layouts.user_type.auth')
 
+@section('title', 'Otoparts - Dashboard')
+
 @section('content')
 
   <div class="row">

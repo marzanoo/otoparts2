@@ -1,5 +1,7 @@
 @extends('layouts.user_type.auth')
 
+@section('title', 'Otoparts - Barang')
+
 @section('content')
   <style>
     /* Gaya untuk modal latar belakang */
